@@ -16,6 +16,9 @@ class Cost
         public ?float $coupon = null,
         public ?float $vatRate = null,
         public ?float $vatAmount = null,
+        public ?float $salesTax = null,
+        public ?float $vat = null,
+        public ?float $finalTotal = null,
     ) {
     }
 }
