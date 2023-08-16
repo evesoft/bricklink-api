@@ -13,6 +13,7 @@ class Shipping
         public ?string $trackingLink = null,
         public ?DateTime $dateShipped = null,
         public ?Address $address = null,
+        public ?string $trackingNo = null,
     ) {
     }
 }
