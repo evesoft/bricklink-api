@@ -14,11 +14,12 @@ class Cost
         public ?float $shipping = null,
         public ?float $credit = null,
         public ?float $coupon = null,
-        public ?float $vatRate = null,
-        public ?float $vatAmount = null,
         public ?float $salesTax = null,
         public ?float $vat = null,
+        public ?float $salestaxCollectedByBl = null,
         public ?float $finalTotal = null,
+        public ?float $vatRate = null,
+        public ?float $vatAmount = null,
     ) {
     }
 }
