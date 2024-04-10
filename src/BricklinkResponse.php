@@ -14,7 +14,7 @@ class BricklinkResponse
 
     private array|stdClass $body;
 
-    private array|stdClass $data;
+    private array|stdClass|null $data;
 
     public static function fromResponse(ResponseInterface $response, bool $asObject = false): static
     {
@@ -24,7 +24,7 @@ class BricklinkResponse
         $self->meta       = $asObject ? $self->body->meta : $self->body['meta'];
         $self->statusCode = $asObject ? (int) $self->meta->code : (int) $self->meta['code'];
 
-        if (!isset($self->body->data) && !isset($self->body['data'])) {
+        if (!isset($self->body->data) && !isset($self->body['data']) && $self->statusCode >= 400) {
             throw new ConnectionException(
                 ($asObject ? $self->meta->message : $self->meta['message']) .
                 ' ' .
@@ -33,7 +33,7 @@ class BricklinkResponse
             );
         }
 
-        $self->data = $asObject ? $self->body->data : $self->body['data'];
+        $self->data = $asObject ? $self->body?->data : $self?->body['data'];
 
         return $self;
     }

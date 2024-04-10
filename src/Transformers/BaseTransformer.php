@@ -57,7 +57,7 @@ class BaseTransformer
             if (isset($this->mapping[$key]) && is_array($this->mapping[$key])) {
                 $transformer = $this->mapping[$key][1];
                 if ('datetime' === $transformer) {
-                    $values[$key] = $value instanceof DateTime ? $value->format('c') : $value;
+                    $values[$key] = $value instanceof DateTime ? $value->format('Y-m-d\TH:i:s\.\0\0\0\Z') : $value;
                 } else {
                     $values[$key] = null !== $value ? call_user_func([$this->getTransformerObject($transformer), 'toArray'], $value) : null;
                 }
@@ -66,9 +66,13 @@ class BaseTransformer
             }
         }
 
+        // Filter out null properties
+        $values = array_filter($values, function ($value) {
+            return null !== $value;
+        });
+
         return $values;
     }
-
     protected function getTransformerObject(string $transformer): BaseTransformer
     {
         return new $transformer();
